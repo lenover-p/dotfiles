@@ -1,0 +1,18 @@
+! Dracula Xresources palette
+St.color0:     color_bg
+St.color8:     color_select
+St.color1:     color_red
+St.color9:     color_ltred
+St.color2:     color_green
+St.color10:    color_ltgreen
+St.color3:     color_yellow
+St.color11:    color_ltyellow
+St.color4:     color_violet
+St.color12:    color_ltviolet
+St.color5:     color_pink
+St.color13:    color_ltpink
+St.color6:     color_cyan
+St.color14:    color_ltcyan
+St.color7:     color_fg
+St.color15:    color_ltgrey
+St.font:       typeface_terminal
