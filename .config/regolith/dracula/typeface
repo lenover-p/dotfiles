@@ -1,5 +1,5 @@
 ! Typeface: JetBrains Mono
-#define typeface_bar_glyph  JetBrains Mono Medium 13
+#define typeface_bar_glyph  JetBrains Mono Book 13
 #define typeface_wm         pango:JetBrains Mono Medium 13
 #define typeface_bar        pango:JetBrains Mono Medium 13, Material Design Icons 13
 #define typeface_rofi       JetBrains Mono Medium 16
@@ -41,7 +41,7 @@
 #define typeface_bar_glyph_on 
 #define typeface_bar_glyph_off 
 
-#define typeface_bar_glyph_numlock 
-#define typeface_bar_glyph_capslock 
+#define typeface_bar_glyph_numlock N
+#define typeface_bar_glyph_capslock C
 
 #define typeface_bar_glyph_error 
