@@ -2,9 +2,9 @@
 
 :root{
   scrollbar-color: #44475A #282A36 !important;
-  scrollbar-width: thin !important;
+  scrollbar-width: thick !important;
 }
 
 * {
-  scrollbar-width: thin !important;
+  scrollbar-width: thick !important;
 }
