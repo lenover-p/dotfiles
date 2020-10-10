@@ -24,6 +24,8 @@ Plug 'ryanoasis/vim-devicons'
 
 Plug 'mboughaba/i3config.vim'
 
+Plug 'junegunn/goyo.vim'
+
 call plug#end()
 
 if (has("termguicolors"))
@@ -83,6 +85,9 @@ nmap <leader>l :set list!<CR>
 
 " Use the same symbols as TextMate for tabstops and EOLs
 set listchars=tab:▸\ ,eol:¬
+
+" Toggle Goyo
+map <leader>g :Goyo<CR>
 
 " Use ranger instead of NERDTree
 let g:NERDTreeHijackNetrw = 0
