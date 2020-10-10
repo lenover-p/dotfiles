@@ -83,7 +83,10 @@ bindsym Shift+Return exec /usr/bin/x-terminal-emulator
 ## launch // ranger // <Alt> p ##
 bindsym $mod+p exec /usr/bin/x-terminal-emulator -e ranger
 
+## launch // neovim // <Alt> e ##
+bindsym $mod+e exec /usr/bin/x-terminal-emulator -e nvim
 ## launch // spt // <Alt> o ##
+
 bindsym $mod+o exec /usr/bin/x-terminal-emulator -e spt
 
 ## Launch // Browser // <Alt> Space ##
