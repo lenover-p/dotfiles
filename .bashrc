@@ -117,4 +117,7 @@ if ! shopt -oq posix; then
 fi
 [ -r /home/lenov/.byobu/prompt ] && . /home/lenov/.byobu/prompt   #byobu-prompt#
 alias dotfiles='/usr/bin/git --git-dir=/home/lenov/.dotfiles/ --work-tree=/home/lenov'
+
+alias weather='curl wttr.in/ottawa'
+alias weath='curl wttr.in/ottawa?format=3'
 PATH="$HOME/.local/bin:$PATH"
