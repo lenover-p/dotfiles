@@ -1,6 +1,6 @@
 #define gtk_theme           Dracula
 #define icon_theme          Moka
-#define desktop_wallpaper   ~/.config/regolith/dracula/backgrounds/dracula-purplish.png
+#define desktop_wallpaper   ~/.config/regolith/dracula/backgrounds/white_lotus.png
 #define rofi_theme          ~/.config/regolith/dracula/rofi.rasi
 #define theme_terminal_scrollbar never
 
