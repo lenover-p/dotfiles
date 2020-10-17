@@ -120,4 +120,5 @@ alias dotfiles='/usr/bin/git --git-dir=/home/lenov/.dotfiles/ --work-tree=/home/
 
 alias weather='curl wttr.in/ottawa'
 alias weath='curl wttr.in/ottawa?format=3'
+alias flashkeeb='cd /home/lenov/qmk_firmware/;make redox/rev1:lenov:avrdude'
 PATH="$HOME/.local/bin:$PATH"
