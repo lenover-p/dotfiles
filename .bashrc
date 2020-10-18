@@ -122,7 +122,7 @@ function weather() {
   local OPTIND format
   while getopts ":vs" option; do
     case $option in
-      v) format=v2p ;;
+      v) format=v2 ;;
       s) format=3 ;;
       ?) echo "invalid option: $OPTARG"; return 1 ;;
     esac
