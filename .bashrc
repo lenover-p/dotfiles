@@ -118,7 +118,17 @@ fi
 [ -r /home/lenov/.byobu/prompt ] && . /home/lenov/.byobu/prompt   #byobu-prompt#
 alias dotfiles='/usr/bin/git --git-dir=/home/lenov/.dotfiles/ --work-tree=/home/lenov'
 
-alias weather='curl wttr.in/ottawa'
-alias weath='curl wttr.in/ottawa?format=3'
+function weather() {
+  local OPTIND format
+  while getopts ":vs" option; do
+    case $option in
+      v) format=v2p ;;
+      s) format=3 ;;
+      ?) echo "invalid option: $OPTARG"; return 1 ;;
+    esac
+  done
+  curl wttr.in/ottawa?format=${format}
+}
+
 alias flashkeeb='cd /home/lenov/qmk_firmware/;make redox/rev1:lenov:avrdude'
 PATH="$HOME/.local/bin:$PATH"
