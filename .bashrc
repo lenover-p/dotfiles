@@ -131,4 +131,5 @@ function weather() {
 }
 
 alias flashkeeb='cd /home/lenov/qmk_firmware/;make redox/rev1:lenov:avrdude'
+alias calc='bc'
 PATH="$HOME/.local/bin:$PATH"
