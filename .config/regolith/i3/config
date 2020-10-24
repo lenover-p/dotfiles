@@ -85,9 +85,9 @@ bindsym $mod+p exec /usr/bin/x-terminal-emulator -e ranger
 
 ## launch // neovim // <Alt> e ##
 bindsym $mod+e exec /usr/bin/x-terminal-emulator -e nvim
-## launch // spt // <Alt> o ##
 
-bindsym $mod+o exec /usr/bin/x-terminal-emulator -e spt
+## launch // spt // <Alt> o ##
+bindsym $mod+o exec /usr/bin/x-terminal-emulator -e spt -t 30
 
 ## Launch // Browser // <Alt> Space ##
 bindsym $mod+space exec gtk-launch $(xdg-settings get default-web-browser)
