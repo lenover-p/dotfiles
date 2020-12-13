@@ -39,6 +39,11 @@ hi Normal guibg=NONE ctermbg=NONE
 set number
 set relativenumber
 
+" Tab settings
+set tabstop=3
+set shiftwidth=3
+" set expandtab
+
 " More natural split pane postioning
 set splitbelow
 set splitright
@@ -106,3 +111,11 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 
 " Toggle NERDTREE
 nnoremap <silent> <leader>n :NERDTreeToggle<CR>
+
+" Persisent undo
+set undofile
+
+" Set directories
+set directory=$HOME/.neovim/.swp
+set backupdir=$HOME/.neovim/.swp
+set undodir=$HOME/.neovim/.undo
