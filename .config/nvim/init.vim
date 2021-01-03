@@ -36,6 +36,8 @@ Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
 
 Plug 'vim-syntastic/syntastic'
 
+Plug 'jiangmiao/auto-pairs'
+
 call plug#end()
 
 if (has("termguicolors"))
@@ -173,3 +175,7 @@ let g:syntastic_check_on_wq = 0
 
 " Unmap command history
 nnoremap q: <NOP>
+
+" F5 to run Python script
+autocmd FileType python map <buffer> <F5> :w<CR>:exec '!python3' shellescape(@%, 1)<CR>
+autocmd FileType python imap <buffer> <F5> <esc>:w<CR>:exec '!python3' shellescape(@%, 1)<CR>
