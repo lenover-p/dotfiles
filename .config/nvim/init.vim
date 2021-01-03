@@ -26,6 +26,16 @@ Plug 'mboughaba/i3config.vim'
 
 Plug 'junegunn/goyo.vim'
 
+Plug 'vimwiki/vimwiki'
+
+Plug 'tmhedberg/SimpylFold'
+
+Plug 'vim-scripts/indentpython.vim'
+
+Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
+
+Plug 'vim-syntastic/syntastic'
+
 call plug#end()
 
 if (has("termguicolors"))
@@ -112,6 +122,10 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 " Toggle NERDTREE
 nnoremap <silent> <leader>n :NERDTreeToggle<CR>
 
+" Toggle Ranger
+let g:ranger_map_keys=0
+map <leader>r :Ranger<CR>
+
 " Persisent undo
 set undofile
 
@@ -119,3 +133,43 @@ set undofile
 set directory=$HOME/.neovim/.swp
 set backupdir=$HOME/.neovim/.swp
 set undodir=$HOME/.neovim/.undo
+
+" Prerequisites for VimWiki
+set nocompatible " Pretty sure this is already set by default
+filetype plugin on
+
+" Code folding
+set foldmethod=indent
+set foldlevel=99
+nnoremap <leader>f za
+
+" PEP 8 indentation
+au BufNewFile,BufRead *.py set tabstop=4
+au BufNewFile,BufRead *.py set softtabstop=4
+au BufNewFile,BufRead *.py set shiftwidth=4
+au BufNewFile,BufRead *.py set textwidth=49
+au BufNewFile,BufRead *.py set expandtab
+au BufNewFile,BufRead *.py set autoindent
+au BufNewFile,BufRead *.py set fileformat=unix
+au BufNewFile,BufRead *.py set encoding=utf-8
+
+" Full stack indentation
+au BufNewFile,BufRead *.js, *.html, *.css set tabstop=2
+au BufNewFile,BufRead *.js, *.html, *.css set softtabstop=2
+au BufNewFile,BufRead *.js, *.html, *.css set shiftwidth=2
+
+" Use deoplete.
+let g:deoplete#enable_at_startup = 1
+
+" Syntastic defaults
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+" Unmap command history
+nnoremap q: <NOP>
