@@ -38,7 +38,13 @@ Plug 'vim-syntastic/syntastic'
 
 Plug 'jiangmiao/auto-pairs'
 
+Plug 'dag/vim-fish'
+
 call plug#end()
+
+if &shell =~# 'fish$'
+	set shell=sh
+endif
 
 if (has("termguicolors"))
 	set termguicolors
@@ -175,7 +181,23 @@ let g:syntastic_check_on_wq = 0
 
 " Unmap command history
 nnoremap q: <NOP>
+nnoremap q/ <NOP>
 
 " F5 to run Python script
 autocmd FileType python map <buffer> <F5> :w<CR>:exec '!python3' shellescape(@%, 1)<CR>
 autocmd FileType python imap <buffer> <F5> <esc>:w<CR>:exec '!python3' shellescape(@%, 1)<CR>
+
+" Use filetype functionality
+filetype plugin indent on
+
+" Set up :make to use fish for syntax checking.
+autocmd filetype fish compiler fish
+
+" Set this to have long lines wrap inside comments.
+autocmd filetype fish setlocal textwidth=79
+
+" Enable folding of block structures in fish.
+autocmd filetype fish setlocal foldmethod=expr
+
+" Enable fish syntax checker
+let g:syntastic_fish_checkers = ['fish']
