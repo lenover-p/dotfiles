@@ -40,6 +40,8 @@ Plug 'jiangmiao/auto-pairs'
 
 Plug 'dag/vim-fish'
 
+Plug 'sedm0784/vim-resize-mode'
+
 call plug#end()
 
 if &shell =~# 'fish$'
@@ -105,6 +107,13 @@ map <C-l> <C-w>l
 
 " Shortcut to rapidly toggle invisibles
 nmap <leader>l :set list!<CR>
+
+" Replace all is aliased to S.
+nnoremap S :%s//g<Left><Left>
+
+" Save file as sudo on files that require root permission
+" This doesn't work yet
+" cnoremap w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
 
 " Use the same symbols as TextMate for tabstops and EOLs
 set listchars=tab:▸\ ,eol:¬
@@ -186,9 +195,6 @@ nnoremap q/ <NOP>
 " F5 to run Python script
 autocmd FileType python map <buffer> <F5> :w<CR>:exec '!python3' shellescape(@%, 1)<CR>
 autocmd FileType python imap <buffer> <F5> <esc>:w<CR>:exec '!python3' shellescape(@%, 1)<CR>
-
-" Use filetype functionality
-filetype plugin indent on
 
 " Set up :make to use fish for syntax checking.
 autocmd filetype fish compiler fish
