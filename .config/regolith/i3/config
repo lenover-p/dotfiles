@@ -200,7 +200,6 @@ bindsym $mod+v splitv
 ## Modify // Window Layout Mode // <Alt> z ##
 bindsym $mod+z splith
 
-
 ## Modify // Move Window to Workspace 1 - 10 // <Alt><Shift> 0..9 ##
 bindsym $mod+Shift+1 move container to workspace number $ws1
 bindsym $mod+Shift+2 move container to workspace number $ws2
@@ -331,7 +330,7 @@ bindsym $mod+period exec /usr/bin/i3-snapshot -c < /tmp/i3-snapshot
 
 # Toggle bar visibility
 ## Modify // Toggle Bar // <Alt> i ##
-bindsym $mod+i bar mode toggle
+#bindsym $mod+i bar mode toggle
 
 # Cause Settings app to float above tiled windows
 floating_maximum_size -1 x -1

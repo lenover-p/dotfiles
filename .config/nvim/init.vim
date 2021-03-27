@@ -1,7 +1,7 @@
 if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
-  silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs
-    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+	silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs
+		\ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+	autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
 call plug#begin(stdpath('data').'/plugged')
@@ -42,7 +42,13 @@ Plug 'dag/vim-fish'
 
 Plug 'sedm0784/vim-resize-mode'
 
+Plug 'rust-lang/rust.vim'
+
+Plug 'othree/eregex.vim'
+
 call plug#end()
+" :PlugInstall
+" :PlugUpdate
 
 if &shell =~# 'fish$'
 	set shell=sh
@@ -77,8 +83,8 @@ set wildmenu
 
 " Detect i3 config file for syntax highlighting
 aug i3config_ft_detection
-  au!
-  au BufNewFile,BufRead ~/.config/regolith/i3/config set filetype=i3config
+	au!
+	au BufNewFile,BufRead ~/.config/regolith/i3/config set filetype=i3config
 aug end
 
 nnoremap <SPACE> <Nop>
@@ -108,8 +114,8 @@ map <C-l> <C-w>l
 " Shortcut to rapidly toggle invisibles
 nmap <leader>l :set list!<CR>
 
-" Replace all is aliased to S.
-nnoremap S :%s//g<Left><Left>
+" Replace all is aliased to S (uses PCRE).
+nnoremap S :%S//g<Left><Left>
 
 " Save file as sudo on files that require root permission
 " This doesn't work yet
@@ -195,6 +201,11 @@ nnoremap q/ <NOP>
 " F5 to run Python script
 autocmd FileType python map <buffer> <F5> :w<CR>:exec '!python3' shellescape(@%, 1)<CR>
 autocmd FileType python imap <buffer> <F5> <esc>:w<CR>:exec '!python3' shellescape(@%, 1)<CR>
+
+" rust specific
+autocmd FileType rust nmap <F5> :make run<CR>
+autocmd FileType rust nmap <F4> :make build<CR>
+autocmd FileType rust nmap <F6> :make test<CR>
 
 " Set up :make to use fish for syntax checking.
 autocmd filetype fish compiler fish
