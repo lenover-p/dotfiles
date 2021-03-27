@@ -19,6 +19,20 @@ function weather
 	end
 end
 
+function ala_opac
+	argparse --name ala_opac --exclusive 'o,opaque,t,transparent' 'o/opaque=?' 't/transparent=?' -- $argv
+	if test $status -ne 0
+		return 1
+	else if set -q _flag_o
+		sed -i 's/background_opacity: [0-9]\.*[0-9]*/background_opacity: 1/' /home/lenov/.config/alacritty/alacritty.yml
+	else if set -q _flag_t
+		sed -i 's/background_opacity: [0-9]\.*[0-9]*/background_opacity: 0.8/' /home/lenov/.config/alacritty/alacritty.yml
+	else
+		echo "Error: Did not recieve option"
+		return 1
+	end
+end
+
 alias flashkeeb='cd /home/lenov/qmk_firmware/;make redox/rev1:lenov:avrdude'
 alias dotfiles='/usr/bin/git --git-dir=/home/lenov/.dotfiles/ --work-tree=/home/lenov'
 alias nv='nvim'
