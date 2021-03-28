@@ -6,8 +6,6 @@ endif
 
 call plug#begin(stdpath('data').'/plugged')
 
-call plug#begin(stdpath('data').'/plugged')
-
 Plug 'dracula/vim'
 
 " Dependancy for ranger
@@ -190,9 +188,22 @@ set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 
 let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
+let g:syntastic_shell = "/bin/bash"
+let g:syntastic_auto_loc_list = 0
+let g:syntastic_enable_hilighting = 1
+
+function! SyntasticCheckHook(errors)
+    if !empty(a:errors)
+        let g:syntastic_loc_list_height = min([len(a:errors), 10])
+    endif
+endfunction
+
+
+nnoremap <leader>e :Errors<CR>
+nnoremap <leader>E :lclose<CR>
+
 
 " Unmap command history
 nnoremap q: <NOP>
