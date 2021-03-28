@@ -19,8 +19,8 @@ function weather
 	end
 end
 
-function ala_opac
-	argparse --name ala_opac --exclusive 'o,opaque,t,transparent' 'o/opaque=?' 't/transparent=?' -- $argv
+function ao
+	argparse --name ao -X 1 --exclusive 'o,opaque,t,transparent' 'o/opaque=?' 't/transparent=?' -- $argv
 	if test $status -ne 0
 		return 1
 	else if set -q _flag_o
