@@ -44,6 +44,8 @@ Plug 'rust-lang/rust.vim'
 
 Plug 'othree/eregex.vim'
 
+Plug 'justinmk/vim-sneak'
+
 call plug#end()
 " :PlugInstall
 " :PlugUpdate
