@@ -22,8 +22,6 @@ Plug 'ryanoasis/vim-devicons'
 
 Plug 'mboughaba/i3config.vim'
 
-Plug 'junegunn/goyo.vim'
-
 Plug 'vimwiki/vimwiki'
 
 Plug 'tmhedberg/SimpylFold'
@@ -115,7 +113,7 @@ map <C-l> <C-w>l
 nmap <leader>l :set list!<CR>
 
 " Replace all is aliased to S (uses PCRE).
-nnoremap S :%S//g<Left><Left>
+nnoremap <leader>s :%S//g<Left><Left>
 
 " Save file as sudo on files that require root permission
 " This doesn't work yet
@@ -123,9 +121,6 @@ nnoremap S :%S//g<Left><Left>
 
 " Use the same symbols as TextMate for tabstops and EOLs
 set listchars=tab:▸\ ,eol:¬
-
-" Toggle Goyo
-map <leader>g :Goyo<CR>
 
 " Use ranger instead of NERDTree
 let g:NERDTreeHijackNetrw = 0
@@ -148,6 +143,8 @@ nnoremap <silent> <leader>n :NERDTreeToggle<CR>
 " Toggle Ranger
 let g:ranger_map_keys=0
 map <leader>r :Ranger<CR>
+map <leader>R :RangerNewTab<CR>
+autocmd TermOpen term://*:ranger* setlocal nonumber norelativenumber signcolumn=no
 
 " Persisent undo
 set undofile
@@ -197,9 +194,9 @@ let g:syntastic_auto_loc_list = 0
 let g:syntastic_enable_hilighting = 1
 
 function! SyntasticCheckHook(errors)
-    if !empty(a:errors)
-        let g:syntastic_loc_list_height = min([len(a:errors), 10])
-    endif
+	if !empty(a:errors)
+		let g:syntastic_loc_list_height = min([len(a:errors), 10])
+	endif
 endfunction
 
 
