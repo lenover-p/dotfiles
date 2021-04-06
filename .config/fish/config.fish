@@ -33,6 +33,15 @@ function ao
 	end
 end
 
+function rcd
+    set tmpfile "/tmp/pwd-from-ranger"
+    ranger --choosedir=$tmpfile $argv
+    set rangerpwd (cat $tmpfile)
+    if test "$PWD" != $rangerpwd
+        cd $rangerpwd
+    end
+end
+
 alias flashkeeb='cd /home/lenov/qmk_firmware/;make redox/rev1:lenov:avrdude'
 alias dotfiles='/usr/bin/git --git-dir=/home/lenov/.dotfiles/ --work-tree=/home/lenov'
 alias nv='nvim'
