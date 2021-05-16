@@ -195,10 +195,10 @@ bindsym $mod+Shift+t focus mode_toggle
 bindsym $mod+t layout toggle tabbed splitv splith
 
 ## Modify // Window Layout Mode // <Alt> v ##
-bindsym $mod+v splitv
+bindsym $mod+v splith
 
 ## Modify // Window Layout Mode // <Alt> z ##
-bindsym $mod+z splith
+bindsym $mod+z splitv
 
 ## Modify // Move Window to Workspace 1 - 10 // <Alt><Shift> 0..9 ##
 bindsym $mod+Shift+1 move container to workspace number $ws1

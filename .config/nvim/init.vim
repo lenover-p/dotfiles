@@ -109,6 +109,8 @@ map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-l> <C-w>l
 
+map <C-w>z <C-w>s
+
 " Shortcut to rapidly toggle invisibles
 nmap <leader>l :set list!<CR>
 
