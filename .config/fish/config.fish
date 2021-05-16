@@ -33,6 +33,23 @@ function ao
 	end
 end
 
+function pow
+	argparse --name pow -X 1 --exclusive 'd,disable,e,enable' 'd/disable=?' 'e/enable=?' -- $argv
+	if test $status -ne 0
+		return 1
+	else if set -q _flag_d
+		gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-timeout 0
+		gsettings set org.gnome.desktop.session idle-delay 0
+	else if set -q _flag_e
+		gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-timeout 1200
+		gsettings set org.gnome.desktop.session idle-delay 300
+	else
+		echo "Error: Did not recieve option"
+		return 1
+	end
+end
+
+
 function rcd
     set tmpfile "/tmp/pwd-from-ranger"
     ranger --choosedir=$tmpfile $argv
@@ -40,6 +57,19 @@ function rcd
     if test "$PWD" != $rangerpwd
         cd $rangerpwd
     end
+end
+
+function muvis
+	set sleep_time (gsettings get org.gnome.settings-daemon.plugins.power sleep-inactive-ac-timeout)
+	set idle_time (gsettings get org.gnome.desktop.session idle-delay)
+
+	gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-timeout 0
+	gsettings set org.gnome.desktop.session idle-delay 0
+
+	cava
+
+	gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-timeout $sleep_time
+	gsettings set org.gnome.desktop.session idle-delay $idle_time
 end
 
 alias flashkeeb='cd /home/lenov/qmk_firmware/;make redox/rev1:lenov:avrdude'
