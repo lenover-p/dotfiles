@@ -20,17 +20,7 @@ Plug 'scrooloose/nerdtree'
 
 Plug 'ryanoasis/vim-devicons'
 
-Plug 'mboughaba/i3config.vim'
-
-Plug 'vimwiki/vimwiki'
-
 Plug 'tmhedberg/SimpylFold'
-
-Plug 'vim-scripts/indentpython.vim'
-
-Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
-
-Plug 'vim-syntastic/syntastic'
 
 Plug 'jiangmiao/auto-pairs'
 
@@ -38,11 +28,27 @@ Plug 'dag/vim-fish'
 
 Plug 'sedm0784/vim-resize-mode'
 
-Plug 'rust-lang/rust.vim'
-
 Plug 'othree/eregex.vim'
 
 Plug 'justinmk/vim-sneak'
+
+Plug 'neovim/nvim-lspconfig'
+
+Plug 'hrsh7th/nvim-compe'
+
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+
+Plug 'kabouzeid/nvim-lspinstall'
+
+Plug 'puremourning/vimspector'
+
+Plug 'nvim-lua/popup.nvim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-telescope/telescope-frecency.nvim'
+Plug 'tami5/sql.nvim'
+
+Plug 'ahmedkhalf/lsp-rooter.nvim'
 
 call plug#end()
 " :PlugInstall
@@ -62,6 +68,9 @@ hi Normal guibg=NONE ctermbg=NONE
 " Display line number and relative line numbers
 set number
 set relativenumber
+
+" Disable word wrapping
+set tw=0
 
 " Tab settings
 set tabstop=3
@@ -91,6 +100,9 @@ let mapleader = "\<Space>"
 " Disables automatic commenting on newline
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
+" spell languages
+set spelllang=en_ca
+
 " Copy to clipboard
 vnoremap <leader>y "+y
 nnoremap <leader>Y "+yg_
@@ -116,6 +128,8 @@ nmap <leader>l :set list!<CR>
 
 " Replace all is aliased to S (uses PCRE).
 nnoremap <leader>s :%S//g<Left><Left>
+vnoremap <leader>s :%S//g<Left><Left>
+vnoremap / :<BS><BS><BS><BS><BS>M/
 
 " Save file as sudo on files that require root permission
 " This doesn't work yet
@@ -169,7 +183,6 @@ nnoremap <leader>f za
 au BufNewFile,BufRead *.py set tabstop=4
 au BufNewFile,BufRead *.py set softtabstop=4
 au BufNewFile,BufRead *.py set shiftwidth=4
-au BufNewFile,BufRead *.py set textwidth=49
 au BufNewFile,BufRead *.py set expandtab
 au BufNewFile,BufRead *.py set autoindent
 au BufNewFile,BufRead *.py set fileformat=unix
@@ -180,31 +193,8 @@ au BufNewFile,BufRead *.js, *.html, *.css set tabstop=2
 au BufNewFile,BufRead *.js, *.html, *.css set softtabstop=2
 au BufNewFile,BufRead *.js, *.html, *.css set shiftwidth=2
 
-" Use deoplete.
-let g:deoplete#enable_at_startup = 1
-
-" Syntastic defaults
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_shell = "/bin/bash"
-let g:syntastic_auto_loc_list = 0
-let g:syntastic_enable_hilighting = 1
-
-function! SyntasticCheckHook(errors)
-	if !empty(a:errors)
-		let g:syntastic_loc_list_height = min([len(a:errors), 10])
-	endif
-endfunction
-
-
-nnoremap <leader>e :Errors<CR>
-nnoremap <leader>E :lclose<CR>
-
+" Wrap if text file
+au BufNewFile,BufRead *.txt set wrap linebreak
 
 " Unmap command history
 nnoremap q: <NOP>
@@ -230,3 +220,112 @@ autocmd filetype fish setlocal foldmethod=expr
 
 " Enable fish syntax checker
 let g:syntastic_fish_checkers = ['fish']
+
+let g:airline_symbols_ascii = 1
+
+lua << EOF
+local nvim_lsp = require('lspconfig')
+	local on_attach = function(client, bufnr)
+	local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+	local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+
+	-- Mappings.
+	local opts = { noremap=true, silent=true }
+
+	-- See `:help vim.lsp.*` for documentation on any of the below functions
+	buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+	buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
+	buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
+	buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+	buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+	buf_set_keymap('n', '<leader>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
+	buf_set_keymap('n', '<leader>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
+	buf_set_keymap('n', '<leader>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
+	buf_set_keymap('n', '<leader>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+	buf_set_keymap('n', '<leader>a', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+	buf_set_keymap('n', '<leader>c', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+	buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+	buf_set_keymap('n', '<leader>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
+	buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
+	buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
+	buf_set_keymap('n', '<leader>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
+	buf_set_keymap("n", '<leader>o', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+end
+
+-- for nvim-lspinstall
+local function setup_servers()
+	require'lspinstall'.setup()
+	local servers = require'lspinstall'.installed_servers()
+	for _, server in pairs(servers) do
+		require'lspconfig'[server].setup{ on_attach = on_attach }
+	end
+end
+setup_servers()
+
+-- Automatically reload after `:LspInstall <server>` so we don't have to restart neovim
+require'lspinstall'.post_install_hook = function ()
+	setup_servers() -- reload installed servers
+	vim.cmd("bufdo e") -- this triggers the FileType autocmd that starts the server
+end
+
+
+-- Automagically cd to project directory using nvim lsp
+require("lsp-rooter").setup {
+	-- your configuration comes here
+	-- or leave it empty to use the default settings
+	-- refer to the configuration section below
+	}
+
+-- CCLS was manually installed
+-- nvim-lspinstall install clangd for C/C++
+-- clangd has problems finding standard libraries
+-- CCLS is used instead
+-- Needs to be configured manually since not installed with nvim-lspinstall
+local lspconfig = require'lspconfig'
+lspconfig.ccls.setup {
+	init_options = {
+		index = {
+			threads = 0;
+		};
+		clang = {
+			excludeArgs = { "-frounding-math"} ;
+		};
+	};
+	on_attach = on_attach;
+}
+
+EOF
+
+set completeopt=menuone,noselect
+let g:compe = {}
+let g:compe.enabled = v:true
+let g:compe.autocomplete = v:true
+let g:compe.debug = v:false
+let g:compe.min_length = 1
+let g:compe.preselect = 'enable'
+let g:compe.throttle_time = 80
+let g:compe.source_timeout = 200
+let g:compe.incomplete_delay = 400
+let g:compe.max_abbr_width = 100
+let g:compe.max_kind_width = 100
+let g:compe.max_menu_width = 100
+let g:compe.documentation = v:true
+
+let g:compe.source = {}
+let g:compe.source.path = v:true
+let g:compe.source.buffer = v:true
+let g:compe.source.calc = v:true
+let g:compe.source.nvim_lsp = v:true
+let g:compe.source.nvim_lua = v:true
+let g:compe.source.vsnip = v:true
+let g:compe.source.ultisnips = v:true
+
+let g:vimspector_enable_mappings = 'HUMAN'
+nmap <leader>dd :call vimspector#Launch()<CR>
+nmap <leader>dx :VimspectorReset<CR>
+nmap <leader>de :VimspectorEval
+nmap <leader>dw :VimspectorWatch
+
+nmap <Leader>A :mksession! ~/.neovim/.session/
+nmap <Leader>L :source ~/.neovim/.session/
+nmap <Leader>H :lua require('telescope').extensions.frecency.frecency()<CR>
