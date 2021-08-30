@@ -56,7 +56,7 @@ class my_edit(Command):
     # The tab method is called when you press tab, and should return a list of
     # suggestions that the user will tab through.
     # tabnum is 1 for <TAB> and -1 for <S-TAB> by default
-    def tab(self, tabnum):
+    def tab(self, _):
         # This is a generic tab-completion function that iterates through the
         # content of the current directory.
         return self._tab_directory_content()
@@ -65,31 +65,61 @@ class my_edit(Command):
 class fzf_select(Command):
     """
     :fzf_select
-
     Find a file using fzf.
-
-    With a prefix argument select only directories.
+    With a prefix argument to select only directories.
 
     See: https://github.com/junegunn/fzf
     """
+
     def execute(self):
         import subprocess
-        if self.quantifier:
-            # match only directories
-            command="find -L . \( -path '*/\.*' -o -fstype 'dev' -o -fstype 'proc' \) -prune \
-            -o -type d -print 2> /dev/null | sed 1d | cut -b3- | fzf +m"
+        import os
+        from ranger.ext.get_executables import get_executables
+
+        if 'fzf' not in get_executables():
+            self.fm.notify('Could not find fzf in the PATH.', bad=True)
+            return
+        fd = None
+        if 'fdfind' in get_executables():
+            fd = 'fdfind'
+        elif 'fd' in get_executables():
+            fd = 'fd'
+
+
+        if fd is not None:
+            hidden = ('--hidden' if self.fm.settings.show_hidden else '')
+            exclude = "--no-ignore-vcs --exclude '.git' --exclude '*.py[co]' --exclude '__pycache__'"
+            only_directories = ('--type directory' if self.quantifier else '')
+            # fzf_default_command = '{} --follow {} {} {} --color=always'.format(
+            #     fd, hidden, exclude, only_directories
+            # )
+            fzf_default_command = '{} --follow {} {} --color=always'.format(
+                fd, hidden, only_directories
+            )
+
         else:
-            # match files and directories
-            command="find -L . \( -path '*/\.*' -o -fstype 'dev' -o -fstype 'proc' \) -prune \
-            -o -print 2> /dev/null | sed 1d | cut -b3- | fzf +m"
-        fzf = self.fm.execute_command(command, stdout=subprocess.PIPE)
-        stdout, stderr = fzf.communicate()
+            hidden = ('-false' if self.fm.settings.show_hidden else r"-path '*/\.*' -prune")
+            exclude = r"\( -name '\.git' -o -iname '\.*py[co]' -o -fstype 'dev' -o -fstype 'proc' \) -prune"
+            only_directories = ('-type d' if self.quantifier else '')
+            fzf_default_command = 'find -L . -mindepth 1 {} -o {} -o {} -print | cut -b3-'.format(
+                hidden, exclude, only_directories
+            )
+
+        env = os.environ.copy()
+        env['FZF_DEFAULT_COMMAND'] = fzf_default_command
+        env['FZF_DEFAULT_OPTS'] = '--height=100% --layout=reverse --ansi --preview="{}"'.format('''
+                cat {} 2>/dev/null | head -n 100
+        ''')
+
+        fzf = self.fm.execute_command('fzf --no-multi', env=env,
+                                      universal_newlines=True, stdout=subprocess.PIPE)
+        stdout, _ = fzf.communicate()
         if fzf.returncode == 0:
-            fzf_file = os.path.abspath(stdout.decode('utf-8').rstrip('\n'))
-            if os.path.isdir(fzf_file):
-                self.fm.cd(fzf_file)
+            selected = os.path.abspath(stdout.strip())
+            if os.path.isdir(selected):
+                self.fm.cd(selected)
             else:
-                self.fm.select_file(fzf_file)
+                self.fm.select_file(selected)
 
 
 # fzf_locate
@@ -103,17 +133,28 @@ class fzf_locate(Command):
 
     See: https://github.com/junegunn/fzf
     """
+
     def execute(self):
         import subprocess
-        if self.quantifier:
-            command="locate home media | fzf -e -i"
-        else:
-            command="locate home media | fzf -e -i"
-        fzf = self.fm.execute_command(command, stdout=subprocess.PIPE)
-        stdout, stderr = fzf.communicate()
+        import os
+        from ranger.ext.get_executables import get_executables
+
+        if 'fzf' not in get_executables():
+            self.fm.notify('Could not find fzf in the PATH.', bad=True)
+            return
+
+        env = os.environ.copy()
+        env['FZF_DEFAULT_OPTS'] = '--height=100% --layout=reverse --ansi --preview="{}"'.format('''
+                cat {} 2>/dev/null | head -n 100
+        ''')
+
+        fzf = self.fm.execute_command("fdfind . '/media' '/home' -H | fzf -e -i", env=env,
+                                      universal_newlines=True, stdout=subprocess.PIPE)
+        stdout, _ = fzf.communicate()
         if fzf.returncode == 0:
-            fzf_file = os.path.abspath(stdout.decode('utf-8').rstrip('\n'))
-            if os.path.isdir(fzf_file):
-                self.fm.cd(fzf_file)
+            selected = os.path.abspath(stdout.strip())
+            if os.path.isdir(selected):
+                self.fm.cd(selected)
             else:
-                self.fm.select_file(fzf_file)
+                self.fm.select_file(selected)
+
