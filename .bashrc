@@ -136,3 +136,5 @@ alias calc='bc'
 eval "$(thefuck --alias)"
 
 PATH="$HOME/.local/bin:$PATH"
+
+# COMMENT
