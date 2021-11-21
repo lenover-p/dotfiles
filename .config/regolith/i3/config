@@ -67,8 +67,9 @@ set_from_resource $ws17 i3-wm.workspace.17.name "17"
 set_from_resource $ws18 i3-wm.workspace.18.name "18"
 set_from_resource $ws19 i3-wm.workspace.19.name "19"
 
-exec spotify
 for_window [class="Spotify"] move to workspace $ws10
+for_window [class="discord"] move to workspace $ws9
+for_window [class="Evolution"] move to workspace $ws8
 
 ###############################################################################
 # Launcher dialogs
@@ -126,6 +127,9 @@ bindsym $mod+j focus down
 bindsym $mod+k focus up
 bindsym $mod+l focus right
 
+# Focus parent container
+bindsym $mod+u focus parent
+
 ## Navigate // Workspaces 1-10 // <Alt> 0..9 ##
 bindsym $mod+1 workspace number $ws1
 bindsym $mod+2 workspace number $ws2
@@ -173,11 +177,11 @@ bindsym $mod+Shift+j move down
 bindsym $mod+Shift+k move up
 bindsym $mod+Shift+l move right
 
-## Modify // Containing Workspace // <Alt><Ctrl><Shift> ↑ ↓ ← → ##
-bindsym $mod+Ctrl+Shift+Left move workspace to output left
-bindsym $mod+Ctrl+Shift+Down move workspace to output down
-bindsym $mod+Ctrl+Shift+Up move workspace to output up
-bindsym $mod+Ctrl+Shift+Right move workspace to output right
+## Modify // Containing Workspace // <Alt><Ctrl> k j h l ##
+bindsym $mod+Ctrl+h move workspace to output left
+bindsym $mod+Ctrl+j move workspace to output down
+bindsym $mod+Ctrl+k move workspace to output up
+bindsym $mod+Ctrl+l move workspace to output right
 
 ## Modify // Window Fullscreen Toggle // <Alt> f ##
 bindsym $mod+f fullscreen toggle
@@ -199,6 +203,8 @@ bindsym $mod+v splith
 
 ## Modify // Window Layout Mode // <Alt> z ##
 bindsym $mod+z splitv
+
+bindsym $mod+s layout tabbed
 
 ## Modify // Move Window to Workspace 1 - 10 // <Alt><Shift> 0..9 ##
 bindsym $mod+Shift+1 move container to workspace number $ws1
@@ -257,8 +263,8 @@ hide_edge_borders smart
 ## Session // Exit App // <Alt> q ##
 bindsym $mod+q [con_id="__focused__"] kill
 
-## Session // Terminate App // <Alt><> q ##
-#indsym $mod+$alt+q [con_id="__focused__"] exec --no-startup-id kill -9 $(xdotool getwindowfocus getwindowpid)
+## Session // Terminate App // <Alt><Shift> q ##
+bindsym $mod+Shift+q [con_id="__focused__"] exec --no-startup-id kill -9 $(xdotool getwindowfocus getwindowpid)
 
 ## Session // Reload i3 Config // <Alt><Shift> c ##
 bindsym $mod+Shift+c reload
@@ -309,14 +315,6 @@ bindsym $mod+w exec $i3-wm.program.wifi
 ## Modify // Bluetooth Settings // <Alt> b ##
 set_from_resource $i3-wm.program.bluetooth i3-wm.program.bluetooth gnome-control-center bluetooth
 bindsym $mod+b exec $i3-wm.program.bluetooth
-
-## Launch // File Browser // <Alt><Shift> n ##
-set_from_resource $i3-wm.program.files i3-wm.program.files /usr/bin/nautilus --new-window
-bindsym $mod+Shift+n exec $i3-wm.program.files
-
-## Launch // Notification Viewer // <Alt> n ##
-set_from_resource $i3-wm.program.notification_ui i3-wm.program.notification_ui /usr/bin/rofication-gui
-bindsym $mod+n exec $i3-wm.program.notification_ui
 
 ###############################################################################
 # Workspace Management
@@ -536,3 +534,5 @@ set_from_resource $i3-wm.program.2 i3-wm.program.2 :
 exec --no-startup-id $i3-wm.program.2
 set_from_resource $i3-wm.program.3 i3-wm.program.3 :
 exec --no-startup-id $i3-wm.program.3
+
+exec --no-startup-id evolution

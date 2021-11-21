@@ -1,35 +1,37 @@
-! Typeface: JetBrains Mono
-#define typeface_bar_glyph  JetBrains Mono Book 13
-#define typeface_wm         pango:JetBrains Mono Medium 13
-#define typeface_bar        pango:JetBrains Mono Medium 13, Material Design Icons 13
+! Typeface: JetBrainsMono Nerd Font
+#define typeface_bar_glyph  JetBrainsMono Nerd Font Medium 13
+#define typeface_wm         pango:JetBrainsMono Nerd Font Medium 13
+#define typeface_bar        pango:JetBrainsMono Nerd Font Medium 13, JetBrainsMono Nerd Font Medium 13
 #define typeface_rofi       JetBrains Mono Medium 16
 #define typeface_terminal   JetBrains Mono:pixelsize=16:antialias=true:autohint=true
-#define typeface_gnome_terminal JetBrains Mono 12
+#define typeface_gnome_terminal JetBrainsMono NerdFont 12
 
-#define typeface_bar_glyph_wifi 
+#define typeface_bar_glyph_wifi 
 #define typeface_bar_glyph_wired 
-#define typeface_bar_glyph_up 
-#define typeface_bar_glyph_dn 
+#define typeface_bar_glyph_up 
+#define typeface_bar_glyph_dn 
 #define typeface_bar_glyph_cpu 
-#define typeface_bar_glyph_battery_100 
-#define typeface_bar_glyph_battery_80 
-#define typeface_bar_glyph_battery_50 
-#define typeface_bar_glyph_battery_20 
-#define typeface_bar_glyph_battery_0 
-#define typeface_bar_glyph_battery_charging 
-#define typeface_bar_glyph_battery_ac 
-#define typeface_bar_glyph_battery_unknown 
-#define typeface_bar_glyph_time 
+#define typeface_bar_glyph_battery_100 
+#define typeface_bar_glyph_battery_80 
+#define typeface_bar_glyph_battery_50 
+#define typeface_bar_glyph_battery_20 
+#define typeface_bar_glyph_battery_0 
+#define typeface_bar_glyph_battery_charging 
+#define typeface_bar_glyph_battery_ac ﳧ
+#define typeface_bar_glyph_battery_unknown ﴏ
+#define typeface_bar_glyph_time 
 #define typeface_bar_glyph_workspace 
 #define typeface_bar_glyph_disk 
 #define typeface_bar_glyph_spotify 
+#define typeface_bar_glyph_discord  
+#define typeface_bar_glyph_email 
 
 #define typeface_bar_glyph_media_playing 
 #define typeface_bar_glyph_media_paused 
 
-#define typeface_bar_glyph_notify_none 
-#define typeface_bar_glyph_notify_some 
-#define typeface_bar_glyph_notify_error 
+#define typeface_bar_glyph_notify_none 
+#define typeface_bar_glyph_notify_some 
+#define typeface_bar_glyph_notify_error 
 #define typeface_bar_glyph_help 
 
 #define typeface_bar_glyph_thermometer 

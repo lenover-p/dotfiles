@@ -1,2 +1,4 @@
 ! -- This points to the default looks Xresource root file.
 #include "/home/lenov/.config/regolith/dracula/root"
+
+i3-wm.program.lock: /home/lenov/.config/regolith/i3/lock

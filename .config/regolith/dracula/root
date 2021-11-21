@@ -16,4 +16,4 @@
 #include "/etc/regolith/styles/gnome"
 
 ! -- i3xrocks Weather Block
-i3xrocks.weather.location: ottawa
+i3xrocks.weather.location: Kingston,Canada

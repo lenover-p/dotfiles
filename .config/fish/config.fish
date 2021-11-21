@@ -11,11 +11,11 @@ function weather
 	if test $status -ne 0
 		return 1
 	else if set -q _flag_v
-		curl wttr.in/ottawa\?format=v2
+		curl wttr.in/(xrescat i3xrocks.weather.location)\?format=v2
 	else if set -q _flag_s
-		curl wttr.in/ottawa\?format=3
+		curl wttr.in/(xrescat i3xrocks.weather.location)\?format=3
 	else
-		curl wttr.in/ottawa
+		curl wttr.in/(xrescat i3xrocks.weather.location)
 	end
 end
 

@@ -2,4 +2,4 @@
 #
 # Display local weather
 [weather]
-interval=1000
+interval=3600
